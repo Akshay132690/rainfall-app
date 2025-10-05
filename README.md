@@ -1,115 +1,79 @@
 
+
 ---
 
 ## 🌧️ Rainfall Prediction App
 
-### Predict whether it will rain in a given location using live weather data and a trained machine learning model.
+### Predict whether it will rain today using NASA weather data and a trained machine learning model.
 
 ---
 
-### 📌 Features
+### 🚀 Features
 
-- 🌍 Location-based prediction using Open-Meteo API  
-- 📅 Date input (limited to next 7 days)  
-- 🔍 Real-time weather data extraction  
-- 🧠 Machine learning model (Random Forest) trained on historical weather data  
-- 🖥️ Streamlit-powered web interface  
-- ✅ Prediction output: “Rainfall” or “No Rainfall”
-
----
-
-### 📁 Project Structure
-
-```
-rainfall-app/
-├── app.py                        # Streamlit app
-├── rainfall_prediction_model.pkl # Trained ML model
-├── README.md                     # Project documentation
-```
+- 🌍 Enter any city name to get weather data
+- 📡 Automatically fetches weather from NASA POWER API
+- 🧠 Uses a trained Random Forest model to predict rainfall
+- 🛡️ Fallback logic ensures prediction even if live data is unavailable
+- 📊 Visualizes weather inputs and model features
+- 🎉 Friendly UI built with Streamlit
 
 ---
 
-### 🧠 Model Details
+### 🧰 Requirements
 
-- Trained using RandomForestClassifier  
-- Features used:
-  - pressure
-  - dewpoint
-  - humidity
-  - cloud
-  - sunshine
-  - winddirection
-  - windspeed  
-- Balanced using downsampling  
-- Tuned with GridSearchCV  
-- Saved using `pickle`
+- Python 3.8+
+- `streamlit`
+- `pandas`
+- `requests`
+- `scikit-learn` (for model compatibility)
 
----
-
-### 🚀 Getting Started
-
-#### 1. Clone the repository or download the folder
+Install dependencies:
 
 ```bash
-git clone https://github.com/yourusername/rainfall-app.git
-cd rainfall-app
+pip install streamlit pandas requests scikit-learn
 ```
 
-#### 2. Install dependencies
+---
 
-```bash
-pip install streamlit pandas scikit-learn requests
-```
+### 📦 Files
 
-#### 3. Run the app
+- `app.py` → Main Streamlit app
+- `rainfall_prediction_model.pkl` → Trained model file (must include `model` and `feature_names` keys)
+
+---
+
+### ▶️ How to Run
 
 ```bash
 streamlit run app.py
 ```
 
----
-
-### 🧪 How to Use
-
-1. Enter a valid city name (e.g., Chhindwara, Mumbai, Delhi)
-2. Select a date within the next 7 days
-3. Click **Predict**
-4. View the result: 🌧️ Rainfall or ☀️ No Rainfall
+Then open your browser at `http://localhost:8501`.
 
 ---
 
-### 🌐 APIs Used
+### 🧠 How It Works
 
-- [Open-Meteo Geocoding API](https://open-meteo.com/)
-- [Open-Meteo Forecast API](https://open-meteo.com/)
-
----
-
-### 📦 Model Training (Optional)
-
-If you want to retrain the model:
-- Use the `Rainfall.csv` dataset
-- Follow the Jupyter notebook steps:
-  - Clean data
-  - Handle missing values
-  - Balance classes
-  - Train and tune Random Forest
-  - Save model with `pickle`
+1. **Geocoding**: Converts city name to latitude/longitude using Open-Meteo API  
+2. **Weather Fetch**: Queries NASA POWER API for recent weather data (T-2 to T-4)  
+3. **Fallback**: If no valid data is found, uses default values  
+4. **Prediction**: Sends features to a trained Random Forest model  
+5. **Visualization**: Displays weather inputs and prediction result
 
 ---
 
-### 📌 To Improve
+### 📌 Notes
 
-- Add SMOTE for better class balancing  
-- Use PCA for dimensionality reduction  
-- Try other models (Logistic Regression, XGBoost)  
-- Deploy online using Streamlit Cloud or Render  
-- Add map view or hourly forecast
+- The model must be trained to accept 7 features. If using only 4 weather features, pad with zeros.
+- NASA POWER may not return data for the current day—this app checks the last 3 days automatically.
+- You can retrain your model using historical NASA data for better accuracy.
 
 ---
 
-### 📄 License
+### ❤️ Credits
 
-This project is open-source and free to use for educational and non-commercial purposes.
+Built with [Streamlit](https://streamlit.io/) and powered by [NASA POWER API](https://power.larc.nasa.gov/).  
+Developed with love using Python.
 
 ---
+
